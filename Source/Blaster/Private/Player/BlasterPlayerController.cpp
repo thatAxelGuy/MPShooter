@@ -5,6 +5,9 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Character/BlasterCharacter.h"
+#include "GameFramework/Character.h"
+
 
 ABlasterPlayerController::ABlasterPlayerController()
 {
@@ -28,9 +31,10 @@ void ABlasterPlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 	
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
-	
 	EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ABlasterPlayerController::Move);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABlasterPlayerController::Look);
+	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ABlasterPlayerController::JumpStarted);
+	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ABlasterPlayerController::JumpCompleted);
 }
 
 void ABlasterPlayerController::Move(const FInputActionValue& InputActionValue)
@@ -57,6 +61,24 @@ void ABlasterPlayerController::Look(const FInputActionValue& InputActionValue)
 	AddYawInput(LookAxisVector.X);
 	
 }
+
+void ABlasterPlayerController::JumpStarted()
+{
+	if (ACharacter* Char = Cast<ABlasterCharacter>(GetPawn()))
+	{
+		Char->Jump();
+	}
+}
+
+void ABlasterPlayerController::JumpCompleted()
+{
+	if (ACharacter* Char = Cast<ABlasterCharacter>(GetPawn()))
+	{
+		Char->StopJumping();
+	}
+}
+
+
 
 
 
