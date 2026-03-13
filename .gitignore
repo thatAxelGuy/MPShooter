@@ -5,6 +5,10 @@
 .idea/
 *.sln.iml
 
+# Unreal Derived Data Cache
+DerivedDataCache/
+LocalDerivedDataCache/
+
 # Compiled Object files
 *.slo
 *.lo
@@ -77,3 +81,4 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+Blaster.uproject.DotSettings.user
