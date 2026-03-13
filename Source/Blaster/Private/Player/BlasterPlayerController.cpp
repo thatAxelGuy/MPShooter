@@ -17,8 +17,10 @@ ABlasterPlayerController::ABlasterPlayerController()
 void ABlasterPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	check(BlasterContext);
 	
+	if (!IsLocalController())return;
+	
+	check(BlasterContext);
 	
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	check(Subsystem);
